@@ -33,7 +33,8 @@ Note: Pin selections can be overridden by modifying the userConfig.h file includ
 #include <RF24.h>
 #include <SPI.h>
 #include <RF24Audio.h>
-#define LED_LINK 19
+#define LED_LINK A5
+bool baglantivar = false;
 
 RF24 radio(7,8);                // Set radio up using pins 7 (CE) 8 (CS)
 RF24Audio rfAudio(radio,1);     // Set up the audio using the radio, and set to radio number 0.
@@ -44,12 +45,11 @@ void setup() {
   pinMode(LED_LINK, OUTPUT);
   //Serial.begin(9600);
   rfAudio.begin();              // Initialize the library.
-  digitalWrite(LED_LINK, HIGH);
 }
 
 void loop() {
-  //Serial.println(analogRead(A0));
-  rfAudio.handleButtons();
+  //Serial.println(radio.available());
+    rfAudio.handleButtons();
   // Audio playback is all managed internally.
   // In this example, the radio is controlled by external buttons, so there is nothing to do here
   // except handle the buttons.
