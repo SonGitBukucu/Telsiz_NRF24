@@ -44,7 +44,7 @@ void setup() {
   pinMode(LED_LINK, OUTPUT);
   //Serial.begin(9600);
   rfAudio.begin();              // Initialize the library.
-
+  digitalWrite(LED_LINK, HIGH);
 }
 
 void loop() {
