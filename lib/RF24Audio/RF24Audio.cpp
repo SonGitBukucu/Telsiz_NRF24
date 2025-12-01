@@ -18,6 +18,7 @@
 
 //******* General Variables ************************
 #define RESOLUTION_BASE ((F_CPU) / 10)
+#define RX_LED 19
 volatile boolean buffEmpty[2] = {true, true}, whichBuff = false, a, lCntr=0, streaming = 0, transmitting = 0;
 volatile byte buffCount = 0;
 volatile byte pauseCntr = 0;
@@ -60,6 +61,8 @@ void RF24Audio::begin()
     #if defined (ENABLE_LED)
     pinMode(ledPin,OUTPUT);
     #endif
+    pinMode(RX_LED, OUTPUT);
+    analogWrite(RX_LED, LOW);
     pinMode(speakerPin, OUTPUT);
     pinMode(speakerPin2, OUTPUT);
     pinMode(TX_PIN, INPUT_PULLUP);
@@ -283,6 +286,7 @@ void handleRadio()
             pauseCntr = 0;                                        // Reset the failure counter
             rampDown();	                                          // Ramp down the speaker (prevention of popping sounds)
             streaming = 0;                                        // Indicate that streaming is stopped
+            digitalWrite(RX_LED, LOW);
             TIMSK1 &= ~(_BV(TOIE1));                              // Disable the TIMER1 overflow vector (playback)
             #if defined (ENABLE_LED)
             TCCR0A &= ~_BV(COM0A1);                               // Disable the TIMER0 LED visualization
@@ -305,6 +309,7 @@ void handleRadio()
             #endif
             default:
                 streaming= 1;                                     // If not a command, treat as audio data, enable streaming
+                digitalWrite(RX_LED, HIGH);
 
 
                 TCCR1A |= _BV(COM1A1) | _BV(COM1B1) | _BV(COM1B0); //Enable output to speaker pin
