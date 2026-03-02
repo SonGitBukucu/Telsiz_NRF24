@@ -22,7 +22,7 @@
  * - RF24_1MBPS up to 24-44khz+
  * - RF24_2MBPS for higher.
  */
-#define RF_SPEED RF24_1MBPS
+#define RF_SPEED RF24_250KBPS
 
 /** @brief The pin that analog readings will be taken from (microphone pin) */
 #define ANALOG_PIN A0
