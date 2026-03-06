@@ -80,7 +80,8 @@ void RF24Audio::begin()
         #endif
     }
 
-    radio.setChannel(1);                                  // Set RF channel to 1
+    radio.setChannel(80);                                  // Set RF channel to 80
+    radio.setPALevel(RF24_PA_MAX);
     radio.setAutoAck(0);                                  // Disable ACKnowledgement packets
     radio.setDataRate(RF_SPEED);                          // Set data rate as specified in user options
     radio.setCRCLength(RF24_CRC_8);                       // Set CRC to 1 byte for speed
