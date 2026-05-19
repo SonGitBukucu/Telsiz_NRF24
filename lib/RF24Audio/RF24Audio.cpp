@@ -288,6 +288,7 @@ void handleRadio()
             rampDown();	                                          // Ramp down the speaker (prevention of popping sounds)
             streaming = 0;                                        // Indicate that streaming is stopped
             digitalWrite(RX_LED, LOW);
+            pinMode(speakerPin, INPUT);
             TIMSK1 &= ~(_BV(TOIE1));                              // Disable the TIMER1 overflow vector (playback)
             #if defined (ENABLE_LED)
             TCCR0A &= ~_BV(COM0A1);                               // Disable the TIMER0 LED visualization
@@ -311,7 +312,7 @@ void handleRadio()
             default:
                 streaming= 1;                                     // If not a command, treat as audio data, enable streaming
                 digitalWrite(RX_LED, HIGH);
-
+                pinMode(speakerPin, OUTPUT);
 
                 TCCR1A |= _BV(COM1A1) | _BV(COM1B1) | _BV(COM1B0); //Enable output to speaker pin
                 rampUp(buffer[0][31]);                             // Ramp up the speakers to prevent popping
