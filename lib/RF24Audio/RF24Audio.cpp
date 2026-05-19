@@ -333,8 +333,6 @@ void handleRadio()
 
 void RX()
 {
-    //pinMode(speakerPin, OUTPUT);
-    //pinMode(speakerPin2, OUTPUT);
     // Start Receiving
     TIMSK1 &= ~_BV(OCIE1B) | _BV(OCIE1A);   // Disable the transmit interrupts
     ADCSRA = 0; ADCSRB = 0;                 // Disable Analog to Digital Converter (ADC)
@@ -516,7 +514,6 @@ ISR(TIMER1_COMPB_vect) { // This interrupt vector captures the ADC values and st
     if (buffCount >= 25) { // In 10-bit mode, do this every 25 samples
         bytePos = 25;      // Reset the position for the extra 2 bits to the 25th byte
         bitPos = 0;        // Reset the bit position for the extra 2 bits
-    }
     #endif
 
         //Both modes
@@ -533,8 +530,6 @@ void TX()
     #if defined (ENABLE_LED)
     TCCR0A &= ~_BV(COM0A1);               // Disable LED visualization
     #endif
-    //pinMode(speakerPin, INPUT);
-    //pinMode(speakerPin2, INPUT);
     radi.stopListening();                 // Enter transmit mode on the radio
     radi.openWritingPipe(pipes[1]);       // Set up reading and writing pipes
     radi.openReadingPipe(1,pipes[0]);
