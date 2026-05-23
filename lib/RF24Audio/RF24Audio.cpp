@@ -515,7 +515,8 @@ ISR(TIMER1_COMPB_vect) { // This interrupt vector captures the ADC values and st
     if (buffCount >= 25) { // In 10-bit mode, do this every 25 samples
         bytePos = 25;      // Reset the position for the extra 2 bits to the 25th byte
         bitPos = 0;        // Reset the bit position for the extra 2 bits
-    #endif
+    }
+        #endif
 
         //Both modes
         buffCount = 0;             // Reset the sample counter
